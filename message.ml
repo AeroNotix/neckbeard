@@ -39,5 +39,6 @@ module Message = struct
        let date = of_date_string date in
        Msg {channel;nick;message;date}
     | _ -> raise (Invalid_message_format raw)
+
 end
 
