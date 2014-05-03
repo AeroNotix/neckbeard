@@ -40,5 +40,18 @@ module Message = struct
        Msg {channel;nick;message;date}
     | _ -> raise (Invalid_message_format raw)
 
-end
+  let of_file path =
+    let process_line line =
+      of_string ~raw:line ~channel:path in
+    try
+      let file = open_in path in
+      Stream.iter process_line file
+    with e ->
+      close_in file;
+      raise e
+  
+  let parse_directory dir =
+    Array.map ~f:of_file
+              (Util.readdir dir)
 
+end
