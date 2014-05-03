@@ -4,8 +4,6 @@ module T = Core.Time
 
 module Message = struct
 
-  exception Invalid_message_format of string
-  
   type msg = { channel : string
              ; nick    : string
              ; message : string
@@ -20,10 +18,12 @@ module Message = struct
   type t =
     | Msg of msg
     | Info of info
+    | Invalid of string
 
   let is_info_marker = function
     | "<--" -> true
     | "-->" -> true
+    | "--"  -> true
     | _     -> false
 
   let of_date_string s =
@@ -38,18 +38,22 @@ module Message = struct
     | [date; nick; message] ->
        let date = of_date_string date in
        Msg {channel;nick;message;date}
-    | _ -> raise (Invalid_message_format raw)
+    | _ -> Invalid raw
 
   let of_file path =
     let process_line line =
       of_string ~raw:line ~channel:path in
-    try
-      let file = open_in path in
-      Stream.iter process_line file
-    with e ->
-      close_in file;
-      raise e
-  
+    let file = open_in path in
+    let messages =
+      try
+        Result.Ok (file
+                   |> Std.input_list
+                   |> List.map ~f:process_line)
+      with e ->
+        Result.Error e in
+    In_channel.close file;
+    messages
+
   let parse_directory dir =
     Array.map ~f:of_file
               (Util.readdir dir)
