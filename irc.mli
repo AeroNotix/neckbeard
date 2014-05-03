@@ -15,5 +15,5 @@ module Message : sig
   val of_string : raw:Core.Std.String.t -> channel:string -> t
   val of_file : string -> (t Core.Std.List.t, exn) Core.Std.Result.t
   val parse_directory :
-    string -> (t Core.Std.List.t, exn) Core.Std.Result.t Core.Std.Array.t
+    string -> (t Core.Std.List.t, exn) Core.Std.Result.t Core.Std.List.t
 end      

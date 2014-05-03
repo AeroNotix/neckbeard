@@ -55,7 +55,7 @@ module Message = struct
     messages
 
   let parse_directory dir =
-    Array.map ~f:of_file
+    List.map ~f:of_file
               (Util.readdir dir)
 
 end
