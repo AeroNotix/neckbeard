@@ -42,7 +42,7 @@ module Message = struct
 
   let of_file path =
     let process_line line =
-      of_string ~raw:line ~channel:path in
+      of_string ~raw:line ~channel:(Filename.basename path) in
     let file = open_in path in
     let messages =
       try
