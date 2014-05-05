@@ -1,3 +1,6 @@
-_build/
-/util.cmi
-/util.cmo
+*.old
+*.cmi
+*.cmo
+_build/*
+_obuild/*
+/ocp-build.root
