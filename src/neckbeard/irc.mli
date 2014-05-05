@@ -13,7 +13,7 @@ module Message : sig
               }
   type t = Msg of msg | Info of info | Invalid of string
   val of_string : raw:Core.Std.String.t -> channel:string -> t
-  val of_file : string -> (t Core.Std.List.t, exn) Core.Std.Result.t
+  val of_file : string -> t Core.Std.List.t Core.Std.Or_error.t
   val parse_directory :
-    string -> (t Core.Std.List.t, exn) Core.Std.Result.t Core.Std.List.t
+    string -> t Core.Std.List.t Core.Std.Or_error.t Core.Std.List.t
 end      

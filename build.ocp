@@ -1,0 +1,20 @@
+begin library "threads"
+     installed = true
+     dirname   = [ "%{OCAMLLIB}%/threads" ]
+     has_byte  = false
+     requires  = [ "unix" ]
+     byte +    = [ "-custom" ]
+end
+
+begin program "neckbeard"
+    requires = [
+        "core"
+        "extlib"
+    ]
+    files    = [ 
+        "src/neckbeard/util.mli"
+        "src/neckbeard/util.ml"
+        "src/neckbeard/irc.mli"
+        "src/neckbeard/irc.ml"
+    ]
+end
