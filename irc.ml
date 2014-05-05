@@ -45,12 +45,10 @@ module Message = struct
       of_string ~raw:line ~channel:(Filename.basename path) in
     let file = open_in path in
     let messages =
-      try
-        Result.Ok (file
-                   |> Std.input_list
-                   |> List.map ~f:process_line)
-      with e ->
-        Result.Error e in
+      Or_error.try_with (fun () ->
+          file
+          |> Std.input_list
+          |> List.map ~f:process_line) in
     In_channel.close file;
     messages
 
