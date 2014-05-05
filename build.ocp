@@ -16,5 +16,6 @@ begin program "neckbeard"
         "src/neckbeard/util.ml"
         "src/neckbeard/irc.mli"
         "src/neckbeard/irc.ml"
+        "src/neckbeard/main.ml"
     ]
 end
